@@ -1,0 +1,92 @@
+swagger: '2.0'
+info:
+  description: Coffe server API
+  version: 1.0.0
+  title: coffee
+host: 'example.ru'
+basePath: /api
+schemes:
+  - http
+securityDefinitions:
+  JWT:
+    description: ''
+    type: apiKey
+    name: x-access-token
+    in: header
+paths:
+  '/admins':
+    post:
+      tags:
+        - Admin
+      summary: Авторизация админа
+      parameters: 
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/auth'
+      responses:
+        '200':
+          description: Авторизация прошла успешно
+          schema:
+            $ref: '#/definitions/token'
+        '401':
+          description: Ошибка авторизации
+        '500':
+          description: Ошибка сервера
+          schema:
+            $ref: '#/definitions/error'
+  '/admins/contacts':
+    get:
+      tags:
+        - Contacts
+      summary: Достать текущие контакты(номер, почта)
+      responses:
+        '200':
+          description: Контакты
+          schema:
+            $ref: '#/definitions/contacts'
+        '500':
+          description: Ошибка сервера
+    put:
+      tags:
+        - Contacts
+      summary: Изменить контакты
+      parameters: 
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/contacts'
+      responses:
+        '200':
+          description: Изменения сохранены
+        '500':
+          description: Ошибка сервера
+definitions:
+  auth:
+    type: object
+    properties:
+      login:
+        type: string
+      password:
+        type: string
+  contacts:
+    type: object
+    properties:
+      phones:
+        type: array
+        items:
+          type: string
+      emails:
+        type: array
+        items:
+          type: string
+  token:
+    type: object
+    properties:
+      token:
+        type: string
+  error:
+    type: object
+    properties:
+      message:
+        type: string

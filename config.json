@@ -1,0 +1,9 @@
+{
+    "db": {
+        "path": "mongodb://localhost:27017/madu"
+    },
+    "port": 8888,
+    "key": {
+        "jwt": "coffee"
+    }
+}
